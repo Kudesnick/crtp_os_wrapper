@@ -1,0 +1,6 @@
+output*
+DebugConfig
+*.uvguix.*
+*.uvoptx
+*.scvd
+JLink*
