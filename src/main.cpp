@@ -4,8 +4,15 @@
  * -Wno-global-constructors -Wno-missing-variable-declarations
  */
 
+#ifdef   _RTE_
+    #include "RTE_Components.h"
+    #include CMSIS_device_header
+#endif
+
 #include <stdint.h>
 #include <stdio.h>
+
+#include "rtx_os.h"
 
 struct arr
 {
@@ -51,5 +58,10 @@ int main()
     exploiter2.runer();
     exploiter3.runer();
     
-    for(;;);
+    osKernelInitialize();
+    NVIC_SetPriorityGrouping(3);
+    // create some threads
+    osKernelStart();
+    
+    printf("Error: kernel not started.\n");
 }
