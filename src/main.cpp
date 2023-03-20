@@ -52,6 +52,9 @@ static arr_exploiter exploiter3 = arr_exploiter_wrapper<exploiter3>();
 
 int main()
 {
+    NVIC_SetPriorityGrouping(3);
+    SystemCoreClockUpdate();
+
     printf("\033[31mC\033[32mO\033[33mL\033[34mO\033[35mR\033[42m \033[0m \033[36mT\033[37mE\033[30m\033[47mS\033[0mT\n"); // Color test
 
     exploiter0.runer();
@@ -59,7 +62,6 @@ int main()
     exploiter3.runer();
     
     osKernelInitialize();
-    NVIC_SetPriorityGrouping(3);
     // create some threads
     osKernelStart();
     
