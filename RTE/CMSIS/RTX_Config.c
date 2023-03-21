@@ -32,7 +32,7 @@
 __WEAK __NO_RETURN void osRtxIdleThread (void *argument) {
   (void)argument;
 
-  for (;;) {}
+  for (;;__WFE());
 }
  
 // OS Error Callback function

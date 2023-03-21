@@ -12,12 +12,12 @@
 // <h> Stack Configuration
 //   <o> Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
 // </h>
-#define STACK_SIZE 0x00001000
+#define STACK_SIZE 0x00000200
 
 // <h> Heap Configuration
 //   <o>  Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
 // </h>
-#define HEAP_SIZE 0x00001000
+#define HEAP_SIZE 0x00000200
 
 // <h> Use CCM for stack and heap region
 //   <o.0>Use CCM
@@ -87,15 +87,15 @@ LR_IROM1 0x08000000 ROM_SIZE  {    ; load region size_region
   SRAM_OS_CB AlignExpr(+0, 4) {
    .ANY (.bss.os) ; Dynamic memory
    .ANY (.bss.os.libspace)
-   .ANY (.bss.os.thread.cb, +OVERALIGN 4)
-   .ANY (.bss.os.timer.cb, +OVERALIGN 4)
-   .ANY (.bss.os.evflags.cb, +OVERALIGN 4)
-   .ANY (.bss.os.mutex.cb, +OVERALIGN 4)
-   .ANY (.bss.os.semaphore.cb, +OVERALIGN 4)
-   .ANY (.bss.os.mempool.cb, +OVERALIGN 4)
-   .ANY (.bss.os.msgqueue.cb, +OVERALIGN 4)
-   .ANY (.bss.os.thread.idle.stack, +OVERALIGN 8)
-   .ANY (.bss.os.thread.timer.stack, +OVERALIGN 8)
+   .ANY (.bss.os.thread.cb, OVERALIGN 4)
+   .ANY (.bss.os.timer.cb, OVERALIGN 4)
+   .ANY (.bss.os.evflags.cb, OVERALIGN 4)
+   .ANY (.bss.os.mutex.cb, OVERALIGN 4)
+   .ANY (.bss.os.semaphore.cb, OVERALIGN 4)
+   .ANY (.bss.os.mempool.cb, OVERALIGN 4)
+   .ANY (.bss.os.msgqueue.cb, OVERALIGN 4)
+   .ANY (.bss.os.thread.idle.stack, OVERALIGN 8)
+   .ANY (.bss.os.thread.timer.stack, OVERALIGN 8)
    .ANY (.bss.os_kernel_is_active.os_kernel_active)
    .ANY (.data.os)
   }

@@ -1,7 +1,16 @@
 /**
- * @note use misc control:
+ * @note use misc control
  * -Wno-c++98-compat -Wno-c++98-compat-pedantic
  * -Wno-global-constructors -Wno-missing-variable-declarations
+ *
+ * @note mutexes in the standard library, which are created via @ref _mutex_initialize
+ * see https://developer.arm.com/documentation/dui0475/m/the-c-and-c---library-functions-reference/thread-safe-c-library-functions
+ * 1 - heap operations
+ * 2 - 
+ * 3 - standard in out operation, etc printf
+ * 4 -
+ * 5 - file operations, etc fopen, fclose
+ * x - A mutex is created for each open file. Mutex is reused
  */
 
 #ifdef   _RTE_
