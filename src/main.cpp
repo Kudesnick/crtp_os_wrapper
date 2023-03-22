@@ -2,6 +2,7 @@
  * @note use misc control
  * -Wno-c++98-compat -Wno-c++98-compat-pedantic
  * -Wno-global-constructors -Wno-missing-variable-declarations
+ * -Wno-gnu-zero-variadic-macro-arguments
  *
  * @note mutexes in the standard library, which are created via @ref _mutex_initialize
  * see https://developer.arm.com/documentation/dui0475/m/the-c-and-c---library-functions-reference/thread-safe-c-library-functions
