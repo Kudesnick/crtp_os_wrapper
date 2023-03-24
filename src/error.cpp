@@ -1,12 +1,7 @@
 
 #include "cmsis_compiler.h"
 #include "rtx_os.h"
-#include <stdio.h>
-#include <stdarg.h>
-
-#define STRINGIFY(x) #x
-#define STR(x) STRINGIFY(x)
-#define printerr(_s, ...) fprintf(stderr, "\033[31mError:\033[0m '" __FILE__ "'[" STR(__LINE__) "] : " _s __VA_OPT__(,) __VA_ARGS__)
+#include "misc.h"
 
 /// OS Error Callback function
 extern "C" uint32_t osRtxErrorNotify (uint32_t code, void *object_id);

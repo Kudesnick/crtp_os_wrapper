@@ -28,10 +28,10 @@
 
 #if (USR_PUT_ITM != 0) || (USR_GET_ITM != 0)
     /* ITM registers */
-    #define ITM_PORT0_U8          (*((volatile uint8_t  *)0xE0000000))
-    #define ITM_PORT0_U32         (*((volatile uint32_t *)0xE0000000))
-    #define ITM_TER               (*((volatile uint32_t *)0xE0000E00))
-    #define ITM_TCR               (*((volatile uint32_t *)0xE0000E80))
+    #define ITM_PORT0_U8          (*reinterpret_cast<volatile uint8_t  *>(0xE0000000))
+    #define ITM_PORT0_U32         (*reinterpret_cast<volatile uint32_t *>(0xE0000000))
+    #define ITM_TER               (*reinterpret_cast<volatile uint32_t *>(0xE0000E00))
+    #define ITM_TCR               (*reinterpret_cast<volatile uint32_t *>(0xE0000E80))
     #ifndef ITM_TCR_ITMENA_Msk
     #define ITM_TCR_ITMENA_Msk    (1UL << 0)
     #endif
@@ -90,7 +90,7 @@ int usr_put_char(int ch)
             {
                 while (ITM_PORT0_U32 == 0);
                 __NOP();
-                ITM_PORT0_U8 = (uint8_t)ch;
+                ITM_PORT0_U8 = static_cast<uint8_t>(ch);
             }
             result = ch;
         #endif
@@ -120,7 +120,7 @@ void usr_put_str(const unsigned char *_buf, uint32_t _len)
                 {
                     while (ITM_PORT0_U32 == 0);
                     __NOP();
-                    ITM_PORT0_U8 = (uint8_t)ch;
+                    ITM_PORT0_U8 = static_cast<uint8_t>(ch);
                 }
             }
         #endif
@@ -161,7 +161,6 @@ void usr_put_str(const unsigned char *_buf, uint32_t _len)
      !defined(RTE_Compiler_IO_STDERR_ITM) && \
      (USR_GET_ITM != 0))
     
-    volatile int32_t ITM_RxBuffer;
     volatile int32_t ITM_RxBuffer = ITM_RXBUFFER_EMPTY;
 
 #endif
