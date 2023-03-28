@@ -4,42 +4,42 @@
 #include "misc.h"
 
 /// OS Error Callback function
-extern uint32_t osRtxErrorNotify(uint32_t code, void *object_id);
+extern "C" uint32_t osRtxErrorNotify(uint32_t code, void *object_id);
 uint32_t osRtxErrorNotify(uint32_t code, void *object_id)
 {
-    uint32_t id = (uint32_t)(object_id);
+    const uint32_t &id = reinterpret_cast<uint32_t>(object_id);
     switch (code)
     {
         case osRtxErrorStackOverflow:
         {
             // Stack overflow detected for thread (thread_id=object_id)
             const char *name = osThreadGetName(object_id);
-            printerr("Stack overflow detected for thread. ID = %#010x. Name = '%s'.\n", id, (name != NULL) ? name : "undefined");
+            printerr("Stack overflow detected for thread. ID = " U32 ". Name = '%s'.\n", id, (name != nullptr) ? name : "undefined");
         }
         break;
         case osRtxErrorISRQueueOverflow:
         {
             // ISR Queue overflow detected when inserting object (object_id)
-            printerr("ISR Queue overflow detected when inserting object. ID = %#010x.\n", id);
+            printerr("ISR Queue overflow detected when inserting object. ID = " U32 ".\n", id);
         }
         break;
         case osRtxErrorTimerQueueOverflow:
         {
             // User Timer Callback Queue overflow detected for timer (timer_id=object_id)
             const char *name = osTimerGetName(object_id);
-            printerr("User Timer Callback Queue overflow detected for timer. ID = %#010x. Name = '%s'.\n", id, (name != NULL) ? name : "undefined");
+            printerr("User Timer Callback Queue overflow detected for timer. ID = " U32 ". Name = '%s'.\n", id, (name != nullptr) ? name : "undefined");
         }
         break;
         case osRtxErrorClibSpace:
         {
             // Standard C/C++ library libspace not available: increase OS_THREAD_LIBSPACE_NUM
-            printerr("Standard C/C++ library libspace not available: increase OS_THREAD_LIBSPACE_NUM. ID = %#010x.\n", id);
+            printerr("Standard C/C++ library libspace not available: increase OS_THREAD_LIBSPACE_NUM. ID = " U32 ".\n", id);
         }
         break;
         case osRtxErrorClibMutex:
         {
             // Standard C/C++ library mutex initialization failed
-            printerr("Standard C/C++ library mutex initialization failed. ID = %#010x.\n", id);
+            printerr("Standard C/C++ library mutex initialization failed. ID = " U32 ".\n", id);
         }
         break;
         default:
@@ -50,6 +50,8 @@ uint32_t osRtxErrorNotify(uint32_t code, void *object_id)
     }
     for (;;);
 }
+
+// ==== Hardfault registers dump ====
 
 /**
  * @brief Структура регистров на момент HARDFAULT
@@ -66,7 +68,9 @@ struct reg_dump_t
     uint32_t psr;   //!< Значение регистра PSR в момент генерации HARDFAULT
 };
 
-__USED static void _reg_dump(uint32_t *stack_addr);
+extern "C" {
+    __USED static void _reg_dump(uint32_t *stack_addr);
+}
 
 /**
  * @brief Запись состояние регистров в лог (запись HardFault) до входа в прерывание
@@ -74,18 +78,16 @@ __USED static void _reg_dump(uint32_t *stack_addr);
  *          r2 в строке "ldr r2, handler2_address_const" записывается неверное значение адреса функции, и дальнейшая инструкция
  *          "bx r2" улетает за пределы Flash - соотв. записи в лог не происходит
  */
-__STATIC_INLINE void reg_dump(void)
+static void reg_dump(void)
 {
     __asm volatile
     (
-        " tst lr, #4                    \n"
-        " ite eq                        \n"
-        " mrseq r0, msp                 \n"
-        " mrsne r0, psp                 \n"
-        " ldr r1, [r0, #24]             \n"
-        " ldr r2, reg_dump_ptr          \n"
-        " bx r2                         \n"
-        " reg_dump_ptr: .word _reg_dump \n"
+        ".global _reg_dump\n"
+        "TST lr, #4       \n"
+        "ITE EQ           \n"
+        "MRSEQ r0, MSP    \n"
+        "MRSNE r0, PSP    \n"
+        "B _reg_dump      \n"
     );
 }
 
@@ -95,7 +97,7 @@ __STATIC_INLINE void reg_dump(void)
  */
 static void _reg_dump(uint32_t *stack_addr)
 {
-    const struct reg_dump_t hf =
+    const reg_dump_t hf =
     {
         .r0  = stack_addr[0],
         .r1  = stack_addr[1],
@@ -106,21 +108,21 @@ static void _reg_dump(uint32_t *stack_addr)
         .pc  = stack_addr[6], /* Program counter. */
         .psr = stack_addr[7], /* Program status register. */
     };
-    
+
     printerr("Hard fault.\n");
     printerr("Regisers dump:\n");
-    printf("\t r0  = %#010x\n", hf.r0 );
-    printf("\t r1  = %#010x\n", hf.r1 );
-    printf("\t r2  = %#010x\n", hf.r2 );
-    printf("\t r3  = %#010x\n", hf.r3 );
+    printf("\t r0  = %#010x\n", hf.r0);
+    printf("\t r1  = %#010x\n", hf.r1);
+    printf("\t r2  = %#010x\n", hf.r2);
+    printf("\t r3  = %#010x\n", hf.r3);
     printf("\t r12 = %#010x\n", hf.r12);
-    printf("\t lr  = %#010x\n", hf.lr );
-    printf("\t pc  = %#010x\n", hf.pc );
+    printf("\t lr  = %#010x\n", hf.lr);
+    printf("\t pc  = %#010x\n", hf.pc);
     printf("\t psr = %#010x\n", hf.psr);
 }
 
 /// System hard fault
-extern void HardFault_Handler(void);
+extern "C" void HardFault_Handler(void);
 __NO_RETURN void HardFault_Handler(void)
 {
     reg_dump();

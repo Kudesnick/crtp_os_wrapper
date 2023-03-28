@@ -337,7 +337,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-global-constructors  -Wno-missing-variable-declarations -Wno-invalid-utf8 -Wno-gnu-zero-variadic-macro-arguments</MiscControls>
+              <MiscControls>-Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-global-constructors  -Wno-missing-variable-declarations -Wno-invalid-utf8 -Wno-gnu-zero-variadic-macro-arguments -Wno-c++20-designator</MiscControls>
               <Define>DEBUG</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
@@ -400,9 +400,9 @@
           <GroupName>os</GroupName>
           <Files>
             <File>
-              <FileName>error.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\src\os\error.c</FilePath>
+              <FileName>err.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\src\os\err.cpp</FilePath>
             </File>
             <File>
               <FileName>misc.h</FileName>

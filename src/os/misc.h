@@ -6,6 +6,8 @@
 #define STR(x) STRINGIFY(x)
 #define printerr(_s, ...) fprintf(stderr, "\033[31mError:\033[0m '" __FILE__ "'[" STR(__LINE__) "] : " _s __VA_OPT__(,) __VA_ARGS__)
 
+#define U32 "%#010x"
+
 #ifdef __cplusplus
 
 constexpr unsigned long long operator "" _KiB(unsigned long long bytes)

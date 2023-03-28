@@ -104,10 +104,10 @@ LR_IROM1 0x08000000 ROM_SIZE  {    ; load region size_region
     .ANY (.bss.os.semaphore.cb, OVERALIGN 4)
     .ANY (.bss.os.mempool.cb, OVERALIGN 4)
     .ANY (.bss.os.msgqueue.cb, OVERALIGN 4)
-    .ANY (.bss.os.thread.idle.stack, OVERALIGN 8)
-    .ANY (.bss.os.thread.timer.stack, OVERALIGN 8)
     .ANY (.bss.os_kernel_is_active.os_kernel_active)
     .ANY (.data.os)
+    .ANY (.bss.os.thread.idle.stack, OVERALIGN 8)
+    .ANY (.bss.os.thread.timer.stack, OVERALIGN 8)
   }
 
   SRAM_ANY +0 {
