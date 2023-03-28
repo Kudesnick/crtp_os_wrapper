@@ -390,19 +390,34 @@
               <FilePath>.\src\crtp.sct</FilePath>
             </File>
             <File>
-              <FileName>error.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>.\src\error.cpp</FilePath>
-            </File>
-            <File>
               <FileName>main.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>.\src\main.cpp</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>os</GroupName>
+          <Files>
+            <File>
+              <FileName>error.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\os\error.c</FilePath>
+            </File>
             <File>
               <FileName>misc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\src\misc.h</FilePath>
+              <FilePath>.\src\os\misc.h</FilePath>
+            </File>
+            <File>
+              <FileName>os.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\src\os\os.h</FilePath>
+            </File>
+            <File>
+              <FileName>os.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\src\os\os.cpp</FilePath>
             </File>
           </Files>
         </Group>

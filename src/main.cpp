@@ -22,7 +22,7 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#include "rtx_os.h"
+#include "os/os.h"
 
 struct arr
 {
@@ -70,10 +70,10 @@ int main()
     exploiter0.runer();
     exploiter2.runer();
     exploiter3.runer();
-    
-    osKernelInitialize();
+
+    os::kernel::initialize();
     // create some threads
-    osKernelStart();
+    os::kernel::start();
     
     printf("Error: kernel not started.\n");
 }
