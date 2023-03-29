@@ -24,7 +24,9 @@
  *
  * -----------------------------------------------------------------------------
  */
- 
+
+#include <stdio.h>
+
 #include "cmsis_compiler.h"
 #include "rtx_os.h"
  
@@ -32,7 +34,17 @@
 __WEAK __NO_RETURN void osRtxIdleThread (void *argument) {
   (void)argument;
 
-  for (;;);
+  for (;;)
+    {
+        osDelay(1000);
+        printf("\r\\");
+        osDelay(1000);
+        printf("\r|");
+        osDelay(1000);
+        printf("\r/");
+        osDelay(1000);
+        printf("\r-");
+    }
 }
  
 // OS Error Callback function

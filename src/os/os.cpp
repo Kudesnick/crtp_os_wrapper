@@ -1,5 +1,5 @@
-#include "rtx_os.h"
 #include "RTX_Config.h"
+#include "cmsis_os2.h"
 
 #include "os.h"
 
